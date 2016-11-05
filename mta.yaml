@@ -1,0 +1,32 @@
+_schema-version: '2.0'
+ID: OHH
+description: openHAB SAP HANA Integration
+version: 0.0.1
+
+modules:
+- name: web
+  type: html5
+  path: web
+  requires:
+      - name: OHH-uaa
+
+- name: core-db
+  type: hdb
+  path: core-db
+  requires:
+    - name: hdi-container
+      properties:
+        Target_Container: ~(hdi-container-name)
+
+resources:
+  - name: OHH-uaa
+    type: com.sap.xs.uaa
+    parameters:
+      config_path: ./xs-security.json 	
+  - name: hdi-container
+    properties:
+       hdi-container-name: ${service-name}
+    type: com.sap.xs.hdi-container
+    parameters:
+      config:
+        schema: OHH
