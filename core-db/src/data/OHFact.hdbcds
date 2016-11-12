@@ -1,0 +1,23 @@
+context OHFact {
+	type OHSYSTEM	: String(10);
+	type STimestamp : UTCTimestamp;
+	type OpCodeT 	: String(50);
+	type OperandT	: String(200);
+	
+    Entity Fact {
+        key  SYSTEM		: OHSYSTEM;
+        key  TIMESTAMP	: STimestamp;
+		OPCODE			: OpCodeT;
+		OPERAND			: OperandT;
+      } technical configuration {
+          column store;
+      };
+
+   define view FactView as SELECT from Fact {
+      SYSTEM as "System", 
+      TIMESTAMP as "Timestamp",
+      OPCODE as "OpCode",
+      OPERAND as "Operand"
+   } with structured privilege check;
+
+};
